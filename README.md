@@ -12,15 +12,7 @@ Paquete en python que nos permite clasificar archivos
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 - [Instalación](#instalaci%C3%B3n)
-  - [Dependencias](#dependencias)
-  - [Desde pypi](#desde-pypi)
-  - [Para desarrollo](#para-desarrollo)
 - [Uso](#uso)
-  - [Búsqueda de textos similares](#b%C3%BAsqueda-de-textos-similares)
-  - [Clasificación de textos](#clasificaci%C3%B3n-de-textos)
-- [Tests](#tests)
-- [Créditos](#cr%C3%A9ditos)
-- [Contacto](#contacto)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
