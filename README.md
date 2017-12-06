@@ -127,4 +127,3 @@ for index , x in enumerate(testers):
 
 ```
 
-# clasificador-archivos
