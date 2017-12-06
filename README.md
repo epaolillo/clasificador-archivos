@@ -52,84 +52,90 @@ Cualquier cambio en el código está disponible en el entorno virtual donde fue 
 
 ### Búsqueda de textos similares
 
-```python
-from textar import TextClassifier
 
-tc = TextClassifier(
-    texts=[
-        "El árbol del edificio moderno tiene manzanas",
-        "El árbol más chico tiene muchas mandarinas naranjas, y está cerca del monumento antiguo",
-        "El edificio más antiguo tiene muchos cuadros caros porque era de un multimillonario",
-        "El edificio más moderno tiene muchas programadoras que comen manzanas durante el almuerzo grupal"
-    ],
-    ids=map(str, range(4))
-)
-
-ids, distancias, palabras_comunes = tc.get_similar(
-    example="Me encontré muchas manzanas en el edificio", 
-    max_similars=4
-)
-
-print ids
-['0', '3', '2', '1']
-
-print distancias
-[0.92781458944579009, 1.0595805639371083, 1.1756638126839645, 1.3206413200640157]
-
-print palabras_comunes
-[[u'edificio', u'manzanas'], [u'edificio', u'muchas', u'manzanas'], [u'edificio', u'muchas'], [u'muchas']]
-```
 
 ### Clasificación de textos
 
 ```python
-from textar import TextClassifier
+# requiere textar
+# requiere numpy, glob, textract, warning
 
-tc = TextClassifier(
-    texts=[
-        "Para hacer una pizza hace falta harina, tomate, queso y jamón",
-        "Para hacer unas empanadas necesitamos tapas de empanadas, tomate, jamón y queso",
-        "Para hacer un daiquiri necesitamos ron, una fruta y un poco de limón",
-        "Para hacer un cuba libre necesitamos coca, ron y un poco de limón",
-        "Para hacer una torta de naranja se necesita harina, huevos, leche, ralladura de naranja y polvo de hornear",
-        "Para hacer un lemon pie se necesita crema, ralladura de limón, huevos, leche y harina"
-    ],
-    ids=map(str, range(6))
-)
+from textar import TextClassifier
+from numpy import array
+import glob
+import textract
+import warnings
+
+textos = []
+puntajes = []
+ejem = []
+etiquetas = []
+
+# Si o si deben ser 3 datasets
+dispos = glob.glob("/home/ezequiel/Descargas/entrena/dispo/*.pdf");
+informes = glob.glob("/home/ezequiel/Descargas/entrena/informe/*.pdf");
+otros = glob.glob("/home/ezequiel/Descargas/entrena/otro/*.pdf");
+
+testers = glob.glob("/home/ezequiel/Descargas/ejem/*.pdf");
+
+
+for informe in informes:
+      cadena = textract.process(informe, method='pdfminer')
+      textos.append(cadena)
+      etiquetas.append("Informe")
+      
+for otro in otros:
+      cadena = textract.process(otro, method='pdfminer')
+      textos.append(cadena)
+      etiquetas.append("Otro")
+      
+for dispo in dispos:
+      cadena = textract.process(dispo, method='pdfminer')
+      textos.append(cadena)   
+      etiquetas.append("Dispo")   
+      
+for archivo in testers:
+      cadena = textract.process(archivo, method='pdfminer')
+      ejem.append(cadena)      
+      
+print("Archivos:")
+print(dispos);
+print(informes);
+
+print(testers);
+print("--------")
+print(etiquetas)
+
+largoTotal = len(informes)+len(dispos)+len(otros)
+
+tc = TextClassifier( textos, ids=map(str, range(largoTotal)) )
+
 
 # entrena un clasificador
 tc.make_classifier(
     name="recetas_classifier",
-    ids=map(str, range(6)),
-    labels=["Comida", "Comida", "Trago", "Trago", "Postre", "Postre"]
+    ids=map(str, range(largoTotal)),
+    labels=etiquetas
 )
 
 labels_considerados, puntajes = tc.classify(
     classifier_name="recetas_classifier", 
-    examples=[
-        "Para hacer un bizcochuelo de chocolate se necesita harina, huevos, leche y chocolate negro",
-        "Para hacer un sanguche de miga necesitamos pan, jamón y queso"
-    ]
+    examples = ejem
 )
 
 print labels_considerados
-array(['Comida', 'Postre', 'Trago'], dtype='|S6')
-
 print puntajes
-array([[-3.52493526,  5.85536809, -6.05497008],
-       [ 2.801027  , -6.55619473, -3.39598721]])
 
-# el primer ejemplo es un postre
-print sorted(zip(puntajes[0], labels_considerados), reverse=True)
-[(5.8553680868184079, 'Postre'),
- (-3.5249352611212568, 'Comida'),
- (-6.0549700786502845, 'Trago')]
 
-# el segundo ejemplo es una comida
-print sorted(zip(puntajes[1], labels_considerados), reverse=True)
-[(2.8010269985828997, 'Comida'),
- (-3.3959872063363505, 'Trago'),
- (-6.5561947275785393, 'Postre')]
+for index , x in enumerate(testers):
+    print "-----------"
+    print x
+    print puntajes[index]
+    es = sorted(zip(puntajes[index], labels_considerados), reverse=True)
+    print es[0][1]
+    print "-----------"
+
+
 ```
 
 ## Tests
