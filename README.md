@@ -1,4 +1,4 @@
-# Analizador de Textos
+# Clasificador de archivos
 
 [![Coverage Status](https://coveralls.io/repos/github/datosgobar/textar/badge.svg?branch=master)](https://coveralls.io/github/datosgobar/textar?branch=master)
 [![Build Status](https://travis-ci.org/datosgobar/textar.svg?branch=master)](https://travis-ci.org/datosgobar/textar)
@@ -6,7 +6,7 @@
 [![Stories in Ready](https://badge.waffle.io/datosgobar/textar.png?label=ready&title=Ready)](https://waffle.io/datosgobar/textar)
 [![Documentation Status](http://readthedocs.org/projects/textar/badge/?version=latest)](http://textar.readthedocs.org/en/latest/?badge=latest)
 
-Paquete en python para análisis, clasificación y recuperación de textos, utilizado por el equipo de Datos Argentina.
+Paquete en python que nos permite clasificar archivos
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -34,17 +34,6 @@ Paquete en python para análisis, clasificación y recuperación de textos, util
 
 * En Ubuntu: `sudo apt-get install libblas-dev liblapack-dev libatlas-base-dev gfortran`
 
-### Desde pypi
-
-`pip install textar`
-
-### Para desarrollo
-
-```
-git clone https://www.github.com/datosgobar/textar.git
-cd path/to/textar
-pip install -e .
-```
 
 Cualquier cambio en el código está disponible en el entorno virtual donde fue instalado de esta manera.
 
@@ -138,23 +127,4 @@ for index , x in enumerate(testers):
 
 ```
 
-## Tests
-
-Los tests sólo se pueden correr habiendo clonado el repo. Luego instalar las dependencias de desarrollo:
-
-`pip install -r requirements_dev.txt`
-
-y correr los tests:
-
-`nosetests`
-
-## Créditos
-
-* [Victor Lavrenko](http://homepages.inf.ed.ac.uk/vlavrenk/) nos ayudó a entender el problema con sus explicaciones en youtube: https://www.youtube.com/user/victorlavrenko
-
-## Contacto
-
-Te invitamos a [crearnos un issue](https://github.com/datosgobar/textar/issues/new?title=Encontré un bug en textar) en caso de que encuentres algún bug o tengas feedback de alguna parte de `textar`.
-
-Para todo lo demás, podés mandarnos tu comentario o consulta a [datos@modernizacion.gob.ar](mailto:datos@modernizacion.gob.ar).
 # clasificador-archivos
